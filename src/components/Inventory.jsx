@@ -31,7 +31,9 @@ export default function Inventory() {
       {medContext.items.map((item) => (
         <li key={item.id}>
           Name: {item.medname} Description:{item.desc} Quantity:{item.quantity}
-          <button onClick={() => decreaseQuantityHandler(item)}>-</button>
+          <button onClick={() => decreaseQuantityHandler(item)}>
+            Add To Bill
+          </button>
         </li>
       ))}
     </ul>

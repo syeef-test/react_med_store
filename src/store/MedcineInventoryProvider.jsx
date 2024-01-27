@@ -25,14 +25,14 @@ const MedcineInventoryProvider = (props) => {
         const updatedItems = [...medcine];
         updatedItems[existingItemIndex].quantity = updatedQuantity;
 
-        console.log(updatedItems);
         updateItems(updatedItems);
+        console.log(items);
       } else {
         // new array without the removed item
         const updatedItems = updatedCartItems.filter(
           (_, index) => index !== existingItemIndex
         );
-        console.log(updatedItems);
+        console.log(items);
 
         updateItems(updatedItems);
       }
