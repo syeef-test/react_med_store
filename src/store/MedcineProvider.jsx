@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import MedcineContext from "./medcine-contex";
+import MedcineContext from "../store/medcine-contex.jsx";
 
 const MedcineProvider = (props) => {
   const [items, updateItems] = useState([]);
-  const addItemtHandler = (newItem) => {};
+  const [quantity, setQuantity] = useState(0);
+
+  const addItemHandler = (newItem) => {
+    updateItems((prevItems) => [...prevItems, newItem]);
+    console.log("called");
+  };
 
   const medcineContext = {
     items: items,
@@ -17,3 +22,5 @@ const MedcineProvider = (props) => {
     </MedcineContext.Provider>
   );
 };
+
+export default MedcineProvider;
