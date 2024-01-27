@@ -26,7 +26,6 @@ function AddMedcine() {
   };
   return (
     <>
-      {console.log(medContext)}
       <form onSubmit={handleSubmit}>
         <input
           type="text"

@@ -3,6 +3,7 @@ import "./App.css";
 import AddMedcine from "./components/AddMedcine.jsx";
 import Inventory from "./components/Inventory.jsx";
 import MedcineProvider from "./store/MedcineProvider.jsx";
+import MedcineInventoryProvider from "./store/MedcineInventoryProvider.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -10,9 +11,11 @@ function App() {
   return (
     <>
       <MedcineProvider>
-        <h1>Medcine Store</h1>
+        <h1>Medicine Store</h1>
         <AddMedcine />
-        <Inventory />
+        <MedcineInventoryProvider>
+          <Inventory />
+        </MedcineInventoryProvider>
       </MedcineProvider>
     </>
   );
