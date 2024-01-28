@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Modal from "react-modal";
+import CartContext from "../../store/cart-context";
 
-const CartModal = ({ isOpen, closeModal, cartItems }) => {
+const CartModal = ({ isOpen, closeModal }) => {
+  const cartContext = useContext(CartContext);
+
+  const handleIncreaseQuantity = (item) => {};
+
+  const handleDecreaseQuantity = (item) => {
+    cartContext.removeItem(item);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -10,10 +19,15 @@ const CartModal = ({ isOpen, closeModal, cartItems }) => {
     >
       <h2>Cart Items</h2>
       <ul>
-        {console.log(cartItems)}
-        {cartItems.map((item) => (
+        {cartContext.items.map((item) => (
           <li key={item.id}>
             {item.med_name} - Quantity: {item.quantity}
+            <button onClick={() => handleIncreaseQuantity(item)}>
+              Increase
+            </button>
+            <button onClick={() => handleDecreaseQuantity(item)}>
+              Decrease
+            </button>
           </li>
         ))}
       </ul>

@@ -1,11 +1,27 @@
 import React, { useContext, useState } from "react";
 import MedicineContext from "./medicine-context";
+import CartContext from "./cart-context";
 
 const MedicineContextProvider = (props) => {
   const [items, setItems] = useState([]);
+  const cartContext = useContext(CartContext);
 
   const addItemHandler = (newItem) => {
-    setItems((prevItems) => [...prevItems, newItem]);
+    const existingItemIndex = items.findIndex(
+      (item) => item.med_name === newItem.med_name
+    );
+
+    if (existingItemIndex !== -1) {
+      //update allready exist order
+      let updatedMedItems = [...items];
+      updatedCartItems[existingItemIndex].quantity =
+        Number(updatedCartItems[existingItemIndex].quantity) +
+        Number(newItem.quantity);
+      setItems(updatedCartItems);
+    } else {
+      //new order simply insert data
+      setItems((prevItems) => [...prevItems, newItem]);
+    }
   };
 
   const removeItemhandler = (newItem) => {
@@ -25,6 +41,11 @@ const MedicineContextProvider = (props) => {
           quantity: updateQuantity,
         };
         setItems(updatedMed);
+        const newitem = {
+          ...updatedMed[existingItemIndex],
+          quantity: 1,
+        };
+        cartContext.addItem(newitem);
       }
     }
   };
