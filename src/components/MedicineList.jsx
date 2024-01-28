@@ -17,7 +17,8 @@ function MedicineList() {
             <strong>Name:</strong> {item.med_name} <br />
             <strong>Description:</strong> {item.desc} <br />
             <strong>Price:</strong> {item.price} <br />
-            <strong>Quantity:</strong> {item.quantity}
+            <strong>Quantity:</strong>{" "}
+            {item.quantity === 0 ? "Out of Stock" : item.quantity}
           </div>
           <div className={styles.buttonContainer}>
             <button
