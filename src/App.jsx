@@ -1,14 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import "./App.css";
 import AddMedicine from "./components/AddMedicine";
 import MedicineList from "./components/MedicineList";
 import MedicineContextProvider from "./store/MedicineContextProvider";
 import CartModal from "./components/UI/CartModal.jsx";
-import CartContext from "./store/cart-context.jsx";
 import CartProvider from "./store/CartProvider.jsx";
 
 function App() {
-  const cartContext = useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {

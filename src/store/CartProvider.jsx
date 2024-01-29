@@ -10,19 +10,36 @@ const CartProvider = (props) => {
     console.log("cart item add called", newItem);
 
     const existingItemIndex = items.findIndex(
-      (item) => item.name === newItem.name
+      (item) => item.med_name === newItem.med_name
     );
 
     if (existingItemIndex !== -1) {
-      //update already existing order
+      // update already existing order
       let updatedCartItems = [...items];
-      updatedCartItems[existingItemIndex].quantity =
-        Number(updatedCartItems[existingItemIndex].quantity) +
-        Number(newItem.quantity);
+      updatedCartItems[existingItemIndex].quantity += Number(newItem.quantity);
       updateItems(updatedCartItems);
     } else {
-      //new order simply insert data
+      // new order, simply insert data
       updateItems((prevItems) => [...prevItems, newItem]);
+    }
+  };
+
+  const addItemByOneHandler = (newItem) => {
+    const existingItemIndex = items.findIndex(
+      (item) => item.med_name === newItem.med_name
+    );
+
+    //change
+    if (medContext.items[existingItemIndex].quantity > 0) {
+      if (existingItemIndex !== -1) {
+        // update already existing order
+        let updatedCartItems = [...items];
+        updatedCartItems[existingItemIndex].quantity += 1;
+        updateItems(updatedCartItems);
+      } else {
+        // new order, simply insert data
+        updateItems((prevItems) => [...prevItems, newItem]);
+      }
     }
   };
 
@@ -30,21 +47,27 @@ const CartProvider = (props) => {
     console.log("cart item remove called", newItem);
 
     const existingItemIndex = items.findIndex(
-      (item) => item.name === newItem.name
+      (item) => item.med_name === newItem.med_name
     );
 
-    if (existingItemIndex !== -1) {
-      //update already existing order
+    if (existingItemIndex !== -1 && items[existingItemIndex].quantity > 0) {
+      // update already existing order
       let updatedCartItems = [...items];
-      updatedCartItems[existingItemIndex].quantity =
-        Number(updatedCartItems[existingItemIndex].quantity) - 1;
+      updatedCartItems[existingItemIndex].quantity -= 1;
 
-      updateItems(updatedCartItems);
-      const newitem = {
-        ...updatedCartItems[existingItemIndex],
-        quantity: 1,
-      };
-      medContext.addItem(newitem);
+      // Check if the quantity is greater than 0 before updating
+      if (updatedCartItems[existingItemIndex].quantity > 0) {
+        updateItems(updatedCartItems);
+        const newitem = {
+          ...newItem,
+          quantity: 1,
+        };
+      } else {
+        // Remove the item if quantity is 0
+        updateItems(
+          updatedCartItems.filter((_, index) => index !== existingItemIndex)
+        );
+      }
     }
   };
 
@@ -56,6 +79,7 @@ const CartProvider = (props) => {
     items: items,
     addItem: addItemToCartHandler,
     removeItem: removeItemToCartHandler,
+    addItemByOne: addItemByOneHandler,
   };
 
   return (
